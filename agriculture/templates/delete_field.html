@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+   <title>Supprimer parcelle | Agri smart</title>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container-fluid my-5">
+   <div class="row">
+      <div class="col-md-5 px-3">
+         <h3><i class="bi bi-image-alt mx-2"></i>Rétirer un champ</h3>
+         <hr class="hr-title">
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-md-4">
+         <form class="mx-2" method="post">
+            <div class="row mb-3">
+               {{ form.csrf_token() }}
+               <div class="row mb-3">
+                  <label for="field-name" class="col-sm-3 col-form-label">{{form.field.label}}</label>
+                  <div class="col-sm-9">
+                     {{ form.field(class="form-select", placeholder="Field Name", id="field-name")}}
+                  </div>
+               </div>
+               <div class="row mb-3">
+                  <label for="field-name" class="col-sm-3 col-form-label">{{form.confirm_field_name.label}}</label>
+                  <div class="col-sm-9">
+                     {{ form.confirm_field_name(class="form-control", placeholder="Write field name to confirm", id="field-name")}}
+                  </div>
+               </div>
+               <div class="row mb-3">
+                  {{ form.submit(class="btn btn-lg w-100 btn-success")}}
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+
+
+{% endblock %}

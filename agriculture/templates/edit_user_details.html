@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+   <title>Infos Utilisateur | Agri smart</title>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+   <div class="row justify-content-center">
+      <div class="col-md-4 user-details p-4">
+         <h3><i class="bi bi-person-circle mx-2"></i> Details de l'Utilisateur</h3>
+         <hr>
+         <p class="lead">Nom d'Utilisateur :</p>
+         <p class="lead user-detail-field">{{user.username}} </p>
+         <p class="lead">Adresse Email : </p>
+         <p class="lead user-detail-field">{{user.email_address}} </p>
+         <p class="lead">Nom de votre entreprise : </p>
+         <p class="lead user-detail-field">{{user.company_name}} </p>
+         <p class="lead">Adresse de l'unité de production principale : </p>
+         <p class="lead user-detail-field">{{user.farm_address}} </p>
+         <p class="lead">Code temporaire : </p>
+         <p class="lead user-detail-field">{{user.fiscal_code}} </p>
+
+      </div>
+      <div class="col-md-1">
+
+      </div>
+      <div class="col-md-4 user-details p-4">
+         <h3><i class="bi bi-pencil-square mx-2"></i> Modifier les infos Utilisateur</h3>
+         <hr>
+         <form method="POST" class="form-register">
+            {{ form.hidden_tag() }}
+            <br>
+            <p class="lead">{{ form.company_name.label }}</p>
+            {{ form.company_name(class="form-control",placeholder="") }}
+            <br>
+            <p class="lead">{{ form.farm_address.label }}</p>
+            {{ form.farm_address(class="form-control",placeholder="") }}
+            <br>
+            <p class="lead">{{ form.fiscal_code.label }}</p>
+            {{ form.fiscal_code(class="form-control",placeholder="") }}
+            <br>
+            {{ form.submit(class="btn btn-lg w-100 btn-success")}}
+
+            <br>
+            <br>
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

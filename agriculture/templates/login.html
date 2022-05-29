@@ -1,0 +1,29 @@
+{% extends "user_log_base.html" %}
+
+{% block title %}
+   <title>Login | Agri smart</title>
+{% endblock %}
+
+{% block content %}
+<h3 class="text-center">Connexion</h3>
+<hr style="margin:auto; height:2px;" >
+<form class=""method="POST">
+   {{ form.hidden_tag() }}
+   <br>
+   <p class="lead">{{ form.username.label }}</p>
+   {{ form.username(class="form-control") }}
+   <br>
+   <p class="lead">{{ form.password.label }}</p>
+   {{ form.password(class="form-control") }}
+   <br>
+   {{ form.submit(class="btn btn-lg w-100 btn-success")}}
+
+   <br>
+   <br>
+
+   <div class="checkbox mb-3">
+      <h6>Vous n'avez pas de compte?</h6>
+      <a class="btn btn-sm btn-secondary" href="{{ url_for('register_page')}}">S'enregistrer</a>
+   </div>
+</form>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+   <title>Tableau de bord | Agri Smart</title>
+{% endblock %}
+
+{% block content %}
+<script type="text/javascript">
+   var fields_dataset = JSON.parse('{{ fields_dataset|safe }}');
+   var map_center = Array({{map_center[0]}},{{map_center[1]}},{{map_center[2]}},{{map_center[3]}});
+</script>
+
+<div class="container-fluid mt-5">
+   <!-- FIELDS MAP -->
+   <div class="row my-3">
+      <div class="col-md-3">
+         <h3><i class="bi bi-stack mx-2"></i>Aperçu de l'Unité de production</h3>
+         <hr class="hr-title">
+      </div>
+   </div>
+   <div class="row my-3 justify-content-center">
+      <div class="col-10"  id="fields-map-div"></div>
+   </div>
+   <!--SPACER-->
+   <div class="row my-3"></div>
+   <!-- FIELDS -->
+   <div class="row my-3">
+      <div class="col-md-3">
+         <h3><i class="bi bi-geo-fill mx-2"></i>Champs</h3>
+         <hr class="hr-title">
+      </div>
+   </div>
+   <div class="row my-3">
+      {% for field in fields %}
+         <div class="col-sm-6 col-md-4 col-xl-3 animate-pop">
+            <div class="card border-1 mb-3" style="border-radius:15; max-width: 540px;">
+              <div class="row g-0 d-flex flex-wrap align-items-center">
+                <div class="col-sm-6 col-md-4">
+                   {% if field.crop.lower() == 'barley' %}
+                     <img src="/static/img/barley.svg" class="field-icon" alt="">
+                   {% endif %}
+                   {% if field.crop.lower() == 'mais' %}
+                     <img src="/static/img/corn.svg" class="field-icon" alt="">
+                   {% endif %}
+                   {% if field.crop.lower() == 'soybean' %}
+                     <img src="/static/img/soybean.svg" class="field-icon" alt="">
+                   {% endif %}
+                </div>
+                <div class="col-sm-6 col-md-8">
+                   <div class="card-body">
+                    <h5 class="card-title">{{ field.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ field.crop }}</h6>
+                    <p class="card-text">Superficie : {{ field.area }} Ha</p>
+                    <a href="{{ url_for('field_details_page', name=field.name) }}" class="btn btn-success">Voir +</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+         </div>
+      {% endfor %}
+   </div>
+   <!--SPACER-->
+   <div class="row my-5"></div>
+
+   <!-- LEAFLET LIB + SCRIPT -->
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin=""/>
+   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+           crossorigin=""></script>
+   <script type="text/javascript" src="/static/js/fields_map.js"></script>
+</div>
+{% endblock %}

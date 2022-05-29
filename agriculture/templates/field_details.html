@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+   <title> {{ name }} | Agri smart</title>
+{% endblock %}
+
+
+{% block content %}
+<script type="text/javascript">
+   var field_data = JSON.parse('{{ field_data|safe }}');
+   var weather = JSON.parse('{{ weather|safe }}');
+</script>
+
+<div class="container-fluid">
+   <!-- <div>
+      {{weather }}
+   </div> -->
+   <div class="row my-5">
+      <div class="col-md-3">
+         <h3><i class="bi bi-geo-fill mx-2"></i>{{name}}</h3>
+         <hr style="width : 150px; height:3px;">
+      </div>
+   </div>
+   <div class="row justify-content-center">
+      <div class="col-sm-4 user-details p-4">
+         <h3><i class="bi bi-image-alt mx-2"></i> Infos du Champs</h3>
+         <hr>
+         <p class="lead">Plantation : </p>
+         <p class="lead user-detail-field">{{crop}} </p>
+         <p class="lead">Superficie [Ha] : </p>
+         <p class="lead user-detail-field">{{area}} </p>
+         <p class="lead">  Indice de végétation moyen (NDVI) : </p>
+         <p class="lead user-detail-field">{{mean_ndvi}}
+            {% if (mean_ndvi<=0.5) %}
+            <p class="text-danger"> La valeur moyenne (FAIBLE ou MOYENNE) du NDVI de votre champ traduit une mauvaise santé de la culture. Par conséquent, votre champ nécessite un soin (irrigation, apport d’engrais…)</p>
+            {% else %}
+            <p class="text-success">La valeur moyenne du NDVI (Forte) de votre champ traduit une bonne santé de la culture.  Par conséquent votre récolte est susceptible d’être très bonne…</p>
+            {% endif %}
+         </p>
+         <p class="lead user-detail-field">NB: La coloration NDVI repose sur une échelle standard de valeurs de NDVI allant de -1 à 1</p>
+      </div>
+      <div class="col-sm-1"></div>
+      <div class="col-sm-6" id="field-map-div"></div>
+   </div>
+   
+   <div class="row my-3 justify-content-center">
+      <div class="col-sm-4 p-4"></div>
+      <div class="col-sm-1"></div>
+      <div class="col-sm-6 navdate">
+         <div class="row">
+            {% if (current_index-1) < 0 %}
+            <div class="col-sm-2 text-center">
+               <a href=""><h1><i class="bi bi-arrow-left-square-fill navdate-disabled"></i></h1></a>
+            </div>
+            {% else %}
+            <div class="col-sm-2 text-center">
+               <a class="navdate" href={{ url_for('field_details_page',name=name, index=current_index-1) }}><h1><i class="bi bi-arrow-left-square-fill"></i></h1></a>
+            </div>
+            {% endif %}
+            <div class="col-sm-8 text-center">
+               <span class="align-text-bottom"><p class="lead" style="color:black;">{{date}}</p></span>
+            </div>
+            <div class="col-sm-2 text-center">
+               <a class="navdate" href={{ url_for('field_details_page',name=name, index=current_index+1) }}><h1><i class="bi bi-arrow-right-square-fill"></i></h1></a>
+            </div>
+         </div>
+      </div>
+      <div class="my-5">
+      </div>
+   </div>
+   <!-- ******************   statistique ************ -->
+
+</div>
+
+<!-- LEAFLET LIB + SCRIPT -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+     crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+<script type="text/javascript" src="/static/js/field_msi_display.js"></script>
+{% endblock %}

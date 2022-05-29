@@ -1,0 +1,6 @@
+{
+   "scihub_data" : {
+      "user" : "<your-scihub-username>",
+      "password" : "<your-scihub-password>"
+   }
+}
